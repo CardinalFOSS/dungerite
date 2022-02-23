@@ -1,0 +1,12 @@
+{
+  "item.shitterite.shit": "屎",
+  "item.shitterite.shit.tooltip": "别乱仍",
+
+  "block.shitterite.shit_block": "大便方块",
+  "block.shitterite.shit_block.tooltip": "味道不错哦",
+  "block.shitterite.shit_block.onUse": "哎呀！你好臭啊！",
+
+  "mixin.shitterite.shitPants": "大便拉到裤子里啦！",
+
+  "itemGroup.shitterite.shit": "大便合金"
+}
