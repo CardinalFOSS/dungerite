@@ -28,7 +28,7 @@ public abstract class MixinPlayerEntity extends LivingEntity {
         throw new AssertionError(); // no clue what this means
     }
 
-    //
+    // method that randomly makes player poop after sleep
     @Inject(method = "wakeUp(ZZ)V", at = @At("TAIL"))
     private void shitPants(CallbackInfo ci) {
         // System.out.println("Woke up!");
