@@ -15,4 +15,6 @@ Refer to installation section of https://fabricmc.net/
 ## Development (Intellij)
 1. Create a new project from version control, use Git, and paste in: 
   ```https://github.com/CardinalFOSS/shitterite.git```
-2. It'll set up everything else for you.
+2. It'll set up everything else for you, just wait until the progress bar at the bottom is finished.
+
+Mod files are built in build/libs
