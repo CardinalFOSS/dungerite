@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WW",
+    "WW"
+  ],
+  "key": {
+    "W": {
+      "item": "dungerite:dung"
+    }
+  },
+  "result": {
+    "item": "dungerite:dung_block",
+    "count": 1
+  }
+}

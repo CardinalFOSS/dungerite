@@ -1,0 +1,11 @@
+{
+  "item.dungerite.dung": "Dung",
+  "item.dungerite.dung.tooltip": "Try throwing me :D",
+  "item.dungerite.seaweed_bomb": "Seaweed Bomb",
+  "item.dungerite.seaweed_bomb.tooltip": "Explodes on impact",
+  "block.dungerite.dung_block": "Dung Block",
+  "block.dungerite.dung_block.tooltip": "Try eating me",
+  "block.dungerite.dung_block.onUse": "Aiya, you very stinky!",
+  "mixin.dungerite.poopPants": "You have shitted your pants!",
+  "itemGroup.dungerite.dung": "Dungerite"
+}

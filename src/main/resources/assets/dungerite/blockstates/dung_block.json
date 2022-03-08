@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "dungerite:block/dung_block"
+    }
+  }
+}

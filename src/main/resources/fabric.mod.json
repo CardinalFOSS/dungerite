@@ -1,28 +1,28 @@
 {
   "schemaVersion": 1,
-  "id": "shitterite",
+  "id": "dungerite",
   "version": "${version}",
-  "name": "Shitterite",
+  "name": "dungerite",
   "description": "A mod that adds poop-themed items",
   "authors": [],
   "contact": {},
   "license": "LGPL-3.0",
-  "icon": "assets/shitterite/icon.png",
+  "icon": "assets/dungerite/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
-      "com.github.foss.shitterite.client.ShitteriteClient"
+      "com.github.foss.dungerite.client.DungeriteClient"
     ],
     "main": [
-      "com.github.foss.shitterite.Shitterite"
+      "com.github.foss.dungerite.Dungerite"
     ]
   },
   "mixins": [
-    "shitterite.mixins.json"
+    "dungerite.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.13.3",
     "fabric": "*",
-    "minecraft": "1.18.1"
+    "minecraft": "1.18.2"
   }
 }

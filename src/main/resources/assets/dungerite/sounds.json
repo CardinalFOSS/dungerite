@@ -1,0 +1,14 @@
+{
+  "fart": {
+    "subtitle": "Fart",
+    "sounds": [
+      "dungerite:fart"
+    ]
+  },
+  "splat": {
+    "subtitle": "Splat",
+    "sounds": [
+      "dungerite:splat"
+    ]
+  }
+}
