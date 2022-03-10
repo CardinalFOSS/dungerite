@@ -10,16 +10,22 @@ import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.Material;
+import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Util;
+import net.minecraft.util.math.Position;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,6 +94,21 @@ public class Dungerite implements ModInitializer {
         // Sounds
         Registry.register(Registry.SOUND_EVENT, FART_ID, FART);
         Registry.register(Registry.SOUND_EVENT, SPLAT_ID, SPLAT);
+
+        // Registering in dispenser --> shootable
+        DispenserBlock.registerBehavior(DUNG, new ProjectileDispenserBehavior() {
+            @Override
+            protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
+                return Util.make(new DungEntity(world, position.getX(), position.getY(), position.getZ()), (entity) -> entity.setItem(stack));
+            }
+        });
+
+        DispenserBlock.registerBehavior(SEAWEED_BOMB, new ProjectileDispenserBehavior() {
+            @Override
+            protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
+                return Util.make(new SeaweedBombEntity(world, position.getX(), position.getY(), position.getZ()), (entity) -> entity.setItem(stack));
+            }
+        });
 
         LOGGER.info("Dungerite loaded!");
     }

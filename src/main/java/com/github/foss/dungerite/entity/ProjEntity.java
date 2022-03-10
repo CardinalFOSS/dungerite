@@ -32,8 +32,8 @@ public abstract class ProjEntity extends ThrownItemEntity {
         super(entityType, livingEntity, world);
     }
 
-    public ProjEntity(EntityType<? extends ThrownItemEntity> entityType, double d, double e, double f, World world) {
-        super(entityType, d, e, f, world);
+    public ProjEntity(EntityType<? extends ThrownItemEntity> entityType, double x, double y, double z, World world) {
+        super(entityType, x, y, z, world);
     }
 
     @Environment(EnvType.CLIENT)
