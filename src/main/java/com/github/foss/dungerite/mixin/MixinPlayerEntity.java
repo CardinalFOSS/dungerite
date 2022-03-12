@@ -21,13 +21,13 @@ import java.util.Random;
 @Mixin(PlayerEntity.class)
 public abstract class MixinPlayerEntity extends LivingEntity {
 
-    @Shadow
-    public abstract void sendMessage(Text message, boolean actionBar);
-
     private MixinPlayerEntity(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
         throw new AssertionError(); // no clue what this means
     }
+
+    @Shadow
+    public abstract void sendMessage(Text message, boolean actionBar);
 
     // method that randomly makes player poop after sleep
     @Inject(method = "wakeUp(ZZ)V", at = @At("TAIL"))

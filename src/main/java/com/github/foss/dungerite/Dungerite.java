@@ -31,9 +31,8 @@ import org.slf4j.LoggerFactory;
 
 
 public class Dungerite implements ModInitializer {
-    public static final Identifier PACKET_ID = new Identifier(Dungerite.MOD_ID, "spawn_packet"); // used for creating entity server-side
-
     public static final String MOD_ID = "dungerite";
+    public static final Identifier PACKET_ID = new Identifier(Dungerite.MOD_ID, "spawn_packet"); // used for creating entity server-side
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     // Blocks
