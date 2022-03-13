@@ -1,4 +1,4 @@
-package com.github.foss.dungerite.mixin.doublejump;
+package com.github.foss.dungerite.mixin.player;
 
 import com.github.foss.dungerite.particletype.DoubleJumpEffect;
 import com.github.foss.dungerite.Dungerite;
@@ -27,7 +27,7 @@ public class MixinDoubleJump {
     private void doubleJump(CallbackInfo ci) {
         ClientPlayerEntity player = (ClientPlayerEntity) (Object) this;
         if (player.isOnGround() || player.isClimbing()) {
-            jumpCount = 1;
+            jumpCount = 1; // allows for 1 jump in midair
         }
         else if (!jumpedLastTick && jumpCount > 0 && player.getVelocity().y < 0) {
             if (player.input.jumping && !player.getAbilities().flying) {
@@ -35,7 +35,7 @@ public class MixinDoubleJump {
                     jumpCount--;
                     player.jump();
 
-                    DoubleJumpEffect.play(player);
+                    DoubleJumpEffect.play(player); // plays effect on player
 
                     PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
                     passedData.writeUuid(player.getUuid());

@@ -1,4 +1,4 @@
-package com.github.foss.dungerite.mixin;
+package com.github.foss.dungerite.mixin.player;
 
 import com.github.foss.dungerite.Dungerite;
 import net.minecraft.entity.EntityType;

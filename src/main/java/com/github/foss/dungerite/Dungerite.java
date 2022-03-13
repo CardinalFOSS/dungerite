@@ -139,6 +139,9 @@ public class Dungerite implements ModInitializer {
                 PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
                 passedData.writeUuid(buf.readUuid());
 
+                // not sure if this is correct
+                // looks up players on the server and determines if they're the player who executed double jump
+                // if not, send a packet requesting effects
                 server.execute(() -> PlayerLookup.tracking(player).forEach(p -> {
                     if (p != player) {
                         ServerPlayNetworking.send(p, S2C_PLAY_EFFECTS_PACKET_ID, passedData);

@@ -43,9 +43,10 @@ public class DungeriteClient implements ClientModInitializer {
 
         EntityRendererRegistryImpl.register(Dungerite.DungEntityType, FlyingItemEntityRenderer::new); // registering entity in database for client
         EntityRendererRegistryImpl.register(Dungerite.SeaweedBombEntityType, FlyingItemEntityRenderer::new); // registering entity in database for client
+        receiveEntityPacket();
 
         // From https://github.com/TurtleArmyMc/DoubleJump
-        receiveEntityPacket();
+        // plays effect from double jump on all players
         ClientPlayNetworking.registerGlobalReceiver(Dungerite.S2C_PLAY_EFFECTS_PACKET_ID, (client, handler, buf, responseSender) -> {
             UUID effectPlayerUuid = buf.readUuid();
             client.execute(() -> {

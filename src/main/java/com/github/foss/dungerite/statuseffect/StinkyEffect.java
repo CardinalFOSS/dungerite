@@ -7,10 +7,11 @@ import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class StinkyEffect extends StatusEffect {
-    protected static boolean stinky = false;
+    // no method bodies because processing is done by hostile mob mixin
     public StinkyEffect() {
         super(StatusEffectCategory.BENEFICIAL, 0xA52A2A);
     }
+
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
         return true;

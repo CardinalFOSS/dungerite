@@ -33,9 +33,10 @@ public class MixinHostileEntity extends PathAwareEntity {
         List<? extends PlayerEntity> playerToAvoid = this.world.getPlayers();
         if (playerToAvoid != null) {
             for (PlayerEntity player : playerToAvoid) {
-                if (player.distanceTo(this) <= 6 && player.hasStatusEffect(Dungerite.STINKY_EFFECT)) {
+                // using for loop because closest player might select player without effects when close proximity
+                if (player.distanceTo(this) <= 6 && player.hasStatusEffect(Dungerite.STINKY_EFFECT))
                     this.goalSelector.add(1, fleePlayerGoal);
-                }
+
                 else this.goalSelector.remove(fleePlayerGoal);
             }
         }

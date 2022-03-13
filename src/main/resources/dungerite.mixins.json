@@ -4,9 +4,9 @@
   "package": "com.github.foss.dungerite.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "doublejump.MixinDoubleJump",
+    "player.MixinDoubleJump",
     "MixinHostileEntity",
-    "MixinPlayerEntity"
+    "player.MixinPlayerEntity"
   ],
   "client": [
   ],
