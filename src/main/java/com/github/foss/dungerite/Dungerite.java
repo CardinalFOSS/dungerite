@@ -5,21 +5,29 @@ import com.github.foss.dungerite.entity.entities.DungEntity;
 import com.github.foss.dungerite.entity.entities.SeaweedBombEntity;
 import com.github.foss.dungerite.item.items.Dung;
 import com.github.foss.dungerite.item.items.SeaweedBomb;
+import com.github.foss.dungerite.statuseffect.StinkyEffect;
+import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.Material;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
@@ -35,6 +43,10 @@ public class Dungerite implements ModInitializer {
     public static final Identifier PACKET_ID = new Identifier(Dungerite.MOD_ID, "spawn_packet"); // used for creating entity server-side
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
+    // Double jump
+    public static final Identifier C2S_DO_DOUBLE_JUMP = new Identifier(MOD_ID, "request_effects");
+    public static final Identifier S2C_PLAY_EFFECTS_PACKET_ID = new Identifier(MOD_ID, "play_effects");
+
     // Blocks
     public static final DungBlock DUNG_BLOCK = new DungBlock(FabricBlockSettings.of(Material.SOLID_ORGANIC).hardness(2.0F).requiresTool());
 
@@ -47,6 +59,12 @@ public class Dungerite implements ModInitializer {
     public static final SoundEvent FART = new SoundEvent(FART_ID);
     public static final Identifier SPLAT_ID = new Identifier(MOD_ID + ":splat"); // used for DUNG on contact
     public static final SoundEvent SPLAT = new SoundEvent(SPLAT_ID);
+
+    // Particle
+    public static final DefaultParticleType FART_PARTICLE = FabricParticleTypes.simple();
+
+    // Effects
+    public static final StatusEffect STINKY_EFFECT = new StinkyEffect();
 
     // ItemGroup
     public static final ItemGroup DUNG_GROUP = FabricItemGroupBuilder.create(
@@ -94,6 +112,12 @@ public class Dungerite implements ModInitializer {
         Registry.register(Registry.SOUND_EVENT, FART_ID, FART);
         Registry.register(Registry.SOUND_EVENT, SPLAT_ID, SPLAT);
 
+        // Particle
+        Registry.register(Registry.PARTICLE_TYPE, new Identifier(MOD_ID, "fart_particle"), FART_PARTICLE);
+
+        // Effects
+        Registry.register(Registry.STATUS_EFFECT, new Identifier(MOD_ID, "stinky_effect"), STINKY_EFFECT);
+
         // Registering in dispenser --> shootable
         DispenserBlock.registerBehavior(DUNG, new ProjectileDispenserBehavior() {
             @Override
@@ -108,6 +132,19 @@ public class Dungerite implements ModInitializer {
                 return Util.make(new SeaweedBombEntity(world, position.getX(), position.getY(), position.getZ()), (entity) -> entity.setItem(stack));
             }
         });
+
+        // Double jump
+        ServerPlayNetworking.registerGlobalReceiver(C2S_DO_DOUBLE_JUMP,
+            (server, player, handler, buf, responseSender) -> {
+                PacketByteBuf passedData = new PacketByteBuf(Unpooled.buffer());
+                passedData.writeUuid(buf.readUuid());
+
+                server.execute(() -> PlayerLookup.tracking(player).forEach(p -> {
+                    if (p != player) {
+                        ServerPlayNetworking.send(p, S2C_PLAY_EFFECTS_PACKET_ID, passedData);
+                    }
+                }));
+            });
 
         LOGGER.info("Dungerite loaded!");
     }

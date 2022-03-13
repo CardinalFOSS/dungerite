@@ -2,15 +2,22 @@ package com.github.foss.dungerite.client;
 
 import com.github.foss.dungerite.Dungerite;
 import com.github.foss.dungerite.entity.EntitySpawnPacket;
+import com.github.foss.dungerite.particletype.DoubleJumpEffect;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.impl.client.rendering.EntityRendererRegistryImpl;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.particle.CloudParticle;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.screen.PlayerScreenHandler;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 
@@ -29,9 +36,25 @@ public class DungeriteClient implements ClientModInitializer {
         // EntityRendererRegistry.INSTANCE.register(Dungerite.DungEntityType, (context) ->
         //        new FlyingItemEntityRenderer(context));
 
+        ClientSpriteRegistryCallback.event(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).register( (atlasTexture, registry) -> registry.register(new Identifier(Dungerite.MOD_ID, "particle/fart_particle")));
+
+        ParticleFactoryRegistry.getInstance().register(Dungerite.FART_PARTICLE, CloudParticle.CloudFactory::new);
+
+
         EntityRendererRegistryImpl.register(Dungerite.DungEntityType, FlyingItemEntityRenderer::new); // registering entity in database for client
         EntityRendererRegistryImpl.register(Dungerite.SeaweedBombEntityType, FlyingItemEntityRenderer::new); // registering entity in database for client
+
+        // From https://github.com/TurtleArmyMc/DoubleJump
         receiveEntityPacket();
+        ClientPlayNetworking.registerGlobalReceiver(Dungerite.S2C_PLAY_EFFECTS_PACKET_ID, (client, handler, buf, responseSender) -> {
+            UUID effectPlayerUuid = buf.readUuid();
+            client.execute(() -> {
+                PlayerEntity effectPlayer = client.player.getEntityWorld().getPlayerByUuid(effectPlayerUuid);
+                if (effectPlayer != null) {
+                    DoubleJumpEffect.play(client.player, effectPlayer);
+                }
+            });
+        });
     }
 
     public void receiveEntityPacket() {

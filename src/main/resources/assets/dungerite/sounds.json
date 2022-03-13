@@ -1,12 +1,12 @@
 {
   "fart": {
-    "subtitle": "Fart",
+    "subtitle": "subtitles.dungerite.fart",
     "sounds": [
       "dungerite:fart"
     ]
   },
   "splat": {
-    "subtitle": "Splat",
+    "subtitle": "subtitles.dungerite.splat",
     "sounds": [
       "dungerite:splat"
     ]

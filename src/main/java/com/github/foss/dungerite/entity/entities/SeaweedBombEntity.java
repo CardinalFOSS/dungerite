@@ -2,16 +2,12 @@ package com.github.foss.dungerite.entity.entities;
 
 import com.github.foss.dungerite.Dungerite;
 import com.github.foss.dungerite.entity.ProjEntity;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
-import net.minecraft.network.Packet;
-import net.minecraft.particle.ParticleEffect;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -36,16 +32,6 @@ public class SeaweedBombEntity extends ProjEntity {
         return Dungerite.SEAWEED_BOMB;
     }
 
-    @Environment(EnvType.CLIENT)
-    protected ParticleEffect getParticleParameters() {
-        return super.getParticleParameters();
-    }
-
-    @Environment(EnvType.CLIENT)
-    public void handleStatus(byte status) {
-        super.handleStatus(status);
-    }
-
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(
                 entityHitResult,
@@ -60,10 +46,5 @@ public class SeaweedBombEntity extends ProjEntity {
         super.onCollision(hitResult);
         if (!this.world.isClient)
             this.world.createExplosion(this, this.getX(), this.getY(), this.getZ(), 2.0f, Explosion.DestructionType.BREAK);
-    }
-
-    @Override
-    public Packet createSpawnPacket() {
-        return super.createSpawnPacket();
     }
 }
