@@ -15,36 +15,37 @@ import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 
 public class SeaweedBombEntity extends ProjEntity {
-    public SeaweedBombEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
-        super(entityType, world);
-    }
+  public SeaweedBombEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
+    super(entityType, world);
+  }
 
-    public SeaweedBombEntity(World world, LivingEntity owner) {
-        super(Dungerite.SeaweedBombEntityType, owner, world);
-    }
+  public SeaweedBombEntity(World world, LivingEntity owner) {
+    super(Dungerite.SeaweedBombEntityType, owner, world);
+  }
 
-    public SeaweedBombEntity(World world, double x, double y, double z) {
-        super(Dungerite.SeaweedBombEntityType, x, y, z, world);
-    }
+  public SeaweedBombEntity(World world, double x, double y, double z) {
+    super(Dungerite.SeaweedBombEntityType, x, y, z, world);
+  }
 
-    @Override
-    protected Item getDefaultItem() {
-        return Dungerite.SEAWEED_BOMB;
-    }
+  @Override
+  protected Item getDefaultItem() {
+    return Dungerite.SEAWEED_BOMB;
+  }
 
-    protected void onEntityHit(EntityHitResult entityHitResult) {
-        super.onEntityHit(
-                entityHitResult,
-                2.0f,
-                SoundEvents.ENTITY_CHICKEN_EGG,
-                new StatusEffectInstance[]{
-                        new StatusEffectInstance(StatusEffects.SLOWNESS, 3 * secsToTicks, 0),
-                });
-    }
+  protected void onEntityHit(EntityHitResult entityHitResult) {
+    super.onEntityHit(
+        entityHitResult,
+        2.0f,
+        SoundEvents.ENTITY_CHICKEN_EGG,
+        new StatusEffectInstance[] {
+          new StatusEffectInstance(StatusEffects.SLOWNESS, 3 * secsToTicks, 0),
+        });
+  }
 
-    protected void onCollision(HitResult hitResult) {
-        super.onCollision(hitResult);
-        if (!this.world.isClient)
-            this.world.createExplosion(this, this.getX(), this.getY(), this.getZ(), 2.0f, Explosion.DestructionType.BREAK);
-    }
+  protected void onCollision(HitResult hitResult) {
+    super.onCollision(hitResult);
+    if (!this.world.isClient)
+      this.world.createExplosion(
+          this, this.getX(), this.getY(), this.getZ(), 2.0f, Explosion.DestructionType.BREAK);
+  }
 }

@@ -12,32 +12,32 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.world.World;
 
 public class DungEntity extends ProjEntity {
-    public DungEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
-        super(entityType, world);
-    }
+  public DungEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
+    super(entityType, world);
+  }
 
-    public DungEntity(World world, LivingEntity owner) {
-        super(Dungerite.DungEntityType, owner, world);
-    }
+  public DungEntity(World world, LivingEntity owner) {
+    super(Dungerite.DungEntityType, owner, world);
+  }
 
-    public DungEntity(World world, double x, double y, double z) {
-        super(Dungerite.DungEntityType, x, y, z, world);
-    }
+  public DungEntity(World world, double x, double y, double z) {
+    super(Dungerite.DungEntityType, x, y, z, world);
+  }
 
-    @Override
-    protected Item getDefaultItem() {
-        return Dungerite.DUNG;
-    }
+  @Override
+  protected Item getDefaultItem() {
+    return Dungerite.DUNG;
+  }
 
-    protected void onEntityHit(EntityHitResult entityHitResult) {
-        super.onEntityHit(
-                entityHitResult,
-                1.0f,
-                Dungerite.SPLAT,
-                new StatusEffectInstance[]{
-                        new StatusEffectInstance(StatusEffects.NAUSEA, 3 * secsToTicks, 0),
-                        new StatusEffectInstance(StatusEffects.POISON, 5 * secsToTicks, 1),
-                        new StatusEffectInstance(StatusEffects.HUNGER, 10 * secsToTicks, 2),
-                });
-    }
+  protected void onEntityHit(EntityHitResult entityHitResult) {
+    super.onEntityHit(
+        entityHitResult,
+        1.0f,
+        Dungerite.SPLAT,
+        new StatusEffectInstance[] {
+          new StatusEffectInstance(StatusEffects.NAUSEA, 3 * secsToTicks, 0),
+          new StatusEffectInstance(StatusEffects.POISON, 5 * secsToTicks, 1),
+          new StatusEffectInstance(StatusEffects.HUNGER, 10 * secsToTicks, 2),
+        });
+  }
 }

@@ -7,3 +7,6 @@ Seaweed:
 - sprites
   - dung
   - seaweed bomb
+
+Kevin Huang:
+- sprite(s?)

@@ -16,30 +16,24 @@ import java.util.List;
 
 @Mixin(HostileEntity.class)
 public class MixinHostileEntity extends PathAwareEntity {
-    private final FleeEntityGoal fleePlayerGoal = new FleeEntityGoal(
-            this,
-            PlayerEntity.class,
-            6.0F,
-            1.0D,
-            1.2D
-    );
+  private final FleeEntityGoal fleePlayerGoal =
+      new FleeEntityGoal(this, PlayerEntity.class, 6.0F, 1.0D, 1.2D);
 
-    protected MixinHostileEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
-        super(entityType, world);
+  protected MixinHostileEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
+    super(entityType, world);
+  }
+
+  @Inject(method = "tickMovement", at = @At("HEAD"))
+  public void run(CallbackInfo ci) {
+    List<? extends PlayerEntity> playerToAvoid = this.world.getPlayers();
+    if (playerToAvoid != null) {
+      for (PlayerEntity player : playerToAvoid) {
+        // using for loop because closest player might select player without effects when close
+        // proximity
+        if (player.distanceTo(this) <= 6 && player.hasStatusEffect(Dungerite.STINKY_EFFECT))
+          this.goalSelector.add(1, fleePlayerGoal);
+        else this.goalSelector.remove(fleePlayerGoal);
+      }
     }
-
-    @Inject(method = "tickMovement", at = @At("HEAD"))
-    public void run(CallbackInfo ci) {
-        List<? extends PlayerEntity> playerToAvoid = this.world.getPlayers();
-        if (playerToAvoid != null) {
-            for (PlayerEntity player : playerToAvoid) {
-                // using for loop because closest player might select player without effects when close proximity
-                if (player.distanceTo(this) <= 6 && player.hasStatusEffect(Dungerite.STINKY_EFFECT))
-                    this.goalSelector.add(1, fleePlayerGoal);
-
-                else this.goalSelector.remove(fleePlayerGoal);
-            }
-        }
-    }
-
+  }
 }

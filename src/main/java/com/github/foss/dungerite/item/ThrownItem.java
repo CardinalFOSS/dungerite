@@ -14,31 +14,19 @@ import net.minecraft.world.World;
  * can't inherit two parent classes
  */
 public interface ThrownItem {
-    default void onThrow(
-            World world,
-            PlayerEntity player,
-            Hand hand,
-            SoundEvent soundEvent,
-            ProjEntity projEntity) {
+  default void onThrow(
+      World world, PlayerEntity player, Hand hand, SoundEvent soundEvent, ProjEntity projEntity) {
 
-        world.playSound(
-                null,
-                player.getBlockPos(),
-                soundEvent,
-                SoundCategory.NEUTRAL,
-                0.5F,
-                1F
-        );
+    world.playSound(null, player.getBlockPos(), soundEvent, SoundCategory.NEUTRAL, 0.5F, 1F);
 
-        if (!world.isClient) {
-            projEntity.setItem(player.getStackInHand(hand)); // setting the entity to the input
-            projEntity.setVelocity(player, player.getPitch(), player.getYaw(), 0.0F, 1.5F, 0F);
-            world.spawnEntity(projEntity);
-        }
-
-        // adds amount of item thrown as a stat
-        player.incrementStat(Stats.USED.getOrCreateStat(player.getStackInHand(hand).getItem()));
-        if (!player.isCreative())
-            player.getStackInHand(hand).decrement(1);
+    if (!world.isClient) {
+      projEntity.setItem(player.getStackInHand(hand)); // setting the entity to the input
+      projEntity.setVelocity(player, player.getPitch(), player.getYaw(), 0.0F, 1.5F, 0F);
+      world.spawnEntity(projEntity);
     }
+
+    // adds amount of item thrown as a stat
+    player.incrementStat(Stats.USED.getOrCreateStat(player.getStackInHand(hand).getItem()));
+    if (!player.isCreative()) player.getStackInHand(hand).decrement(1);
+  }
 }
