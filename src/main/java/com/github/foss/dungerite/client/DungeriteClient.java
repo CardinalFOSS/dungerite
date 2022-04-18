@@ -44,12 +44,16 @@ public class DungeriteClient implements ClientModInitializer {
     ParticleFactoryRegistry.getInstance()
         .register(Dungerite.FART_PARTICLE, CloudParticle.CloudFactory::new);
 
+    // registering entities in database for client
     EntityRendererRegistryImpl.register(
         Dungerite.DungEntityType,
-        FlyingItemEntityRenderer::new); // registering entity in database for client
+        FlyingItemEntityRenderer::new);
     EntityRendererRegistryImpl.register(
         Dungerite.SeaweedBombEntityType,
-        FlyingItemEntityRenderer::new); // registering entity in database for client
+        FlyingItemEntityRenderer::new);
+    EntityRendererRegistryImpl.register(
+        Dungerite.DungBulletEntityType,
+        FlyingItemEntityRenderer::new);
     receiveEntityPacket();
 
     // From https://github.com/TurtleArmyMc/DoubleJump

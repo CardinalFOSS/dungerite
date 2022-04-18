@@ -1,10 +1,13 @@
 package com.github.foss.dungerite;
 
 import com.github.foss.dungerite.block.DungBlock;
+import com.github.foss.dungerite.entity.entities.DungBulletEntity;
 import com.github.foss.dungerite.entity.entities.DungEntity;
 import com.github.foss.dungerite.entity.entities.SeaweedBombEntity;
 import com.github.foss.dungerite.item.items.Dung;
+import com.github.foss.dungerite.item.items.DungBullet;
 import com.github.foss.dungerite.item.items.SeaweedBomb;
+import com.github.foss.dungerite.item.weapons.DungCannon;
 import com.github.foss.dungerite.statuseffect.StinkyEffect;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ModInitializer;
@@ -55,6 +58,8 @@ public class Dungerite implements ModInitializer {
   // Items
   public static final Dung DUNG = new Dung(new FabricItemSettings());
   public static final SeaweedBomb SEAWEED_BOMB = new SeaweedBomb(new FabricItemSettings());
+  public static final DungCannon DUNG_CANNON = new DungCannon(new FabricItemSettings());
+  public static final DungBullet DUNG_BULLET = new DungBullet(new FabricItemSettings());
 
   // Sounds
   public static final Identifier FART_ID = new Identifier(MOD_ID + ":fart"); // used for DUNG_BLOCK
@@ -78,6 +83,8 @@ public class Dungerite implements ModInitializer {
                 stacks.add(new ItemStack(DUNG));
                 stacks.add(new ItemStack(DUNG_BLOCK));
                 stacks.add(new ItemStack(SEAWEED_BOMB));
+                stacks.add(new ItemStack(DUNG_CANNON));
+                stacks.add(new ItemStack(DUNG_BULLET));
               })
           .build();
 
@@ -105,6 +112,20 @@ public class Dungerite implements ModInitializer {
               .trackedUpdateRate(10)
               .build());
 
+  public static final EntityType<DungBulletEntity> DungBulletEntityType =
+          Registry.register(
+                  Registry.ENTITY_TYPE,
+                  new Identifier(MOD_ID, "dung_bullet"),
+                  FabricEntityTypeBuilder.<DungBulletEntity>create(SpawnGroup.MISC, DungBulletEntity::new)
+                          .dimensions(
+                                  EntityDimensions.fixed(
+                                          0.5f, 0.5f)) // dimensions in Minecraft units of the projectile
+                          .trackRangeBlocks(4)
+                          .trackedUpdateRate(
+                                  10) // necessary for all thrown projectiles (as it prevents it from breaking, lol)
+                          .build());
+
+
   @Override
   public void onInitialize() {
     LOGGER.info("Loading Dungerite...");
@@ -119,6 +140,8 @@ public class Dungerite implements ModInitializer {
     // Items
     Registry.register(Registry.ITEM, new Identifier(MOD_ID, "dung"), DUNG);
     Registry.register(Registry.ITEM, new Identifier(MOD_ID, "seaweed_bomb"), SEAWEED_BOMB);
+    Registry.register(Registry.ITEM, new Identifier(MOD_ID, "dung_cannon"), DUNG_CANNON);
+    Registry.register(Registry.ITEM, new Identifier(MOD_ID, "dung_bullet"), DUNG_BULLET);
 
     // Sounds
     Registry.register(Registry.SOUND_EVENT, FART_ID, FART);
