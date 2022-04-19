@@ -2,6 +2,7 @@ package com.github.foss.dungerite.entity.entities;
 
 import com.github.foss.dungerite.Dungerite;
 import com.github.foss.dungerite.entity.ProjEntity;
+import com.github.foss.dungerite.item.InitItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -27,9 +28,10 @@ public class SeaweedBombEntity extends ProjEntity {
     super(Dungerite.SeaweedBombEntityType, x, y, z, world);
   }
 
+
   @Override
   protected Item getDefaultItem() {
-    return Dungerite.SEAWEED_BOMB;
+    return InitItems.items[1]; // SeaweedBomb
   }
 
   protected void onEntityHit(EntityHitResult entityHitResult) {
@@ -47,6 +49,11 @@ public class SeaweedBombEntity extends ProjEntity {
     super.onCollision(hitResult);
     if (!this.world.isClient)
       this.world.createExplosion(
-          this, this.getX(), this.getY(), this.getZ(), 2.0f, Explosion.DestructionType.BREAK);
+          this, this.getX(), this.getY(), this.getZ(), 2.0f, Explosion.DestructionType.DESTROY);
+  }
+
+  @Override
+  public String getPath() {
+    return "seaweed_bomb";
   }
 }

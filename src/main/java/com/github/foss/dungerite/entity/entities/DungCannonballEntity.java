@@ -2,6 +2,7 @@ package com.github.foss.dungerite.entity.entities;
 
 import com.github.foss.dungerite.Dungerite;
 import com.github.foss.dungerite.entity.ProjEntity;
+import com.github.foss.dungerite.item.InitItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -17,8 +18,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 
 
-public class DungBulletEntity extends ProjEntity {
+public class DungCannonballEntity extends ProjEntity {
     private float damage = 0.0F;
+    private int tick = 0;
 
     public float getDamage() {
         return damage;
@@ -29,17 +31,18 @@ public class DungBulletEntity extends ProjEntity {
     }
 
 
-    public DungBulletEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
+    public DungCannonballEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);
     }
 
-    public DungBulletEntity(LivingEntity livingEntity, World world) {
-        super(Dungerite.DungBulletEntityType, livingEntity, world);
+    public DungCannonballEntity(World world, LivingEntity owner) {
+        super(Dungerite.DungCannonballEntityType, owner, world);
     }
 
-    public DungBulletEntity(double x, double y, double z, World world) {
-        super(Dungerite.DungBulletEntityType, x, y, z, world);
+    public DungCannonballEntity(World world, double x, double y, double z) {
+        super(Dungerite.DungCannonballEntityType, x, y, z, world);
     }
+
 
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
@@ -67,11 +70,32 @@ public class DungBulletEntity extends ProjEntity {
         super.onCollision(hitResult);
         if (!this.world.isClient)
             this.world.createExplosion(
-                    this, this.getX(), this.getY(), this.getZ(), 2.0f, Explosion.DestructionType.BREAK);
+                    this, this.getX(), this.getY(), this.getZ(), 1.0f, Explosion.DestructionType.BREAK);
     }
 
     @Override
     protected Item getDefaultItem() {
-        return Dungerite.DUNG_BULLET;
+        return InitItems.items[2]; // DungBullet
+    }
+
+    @Override
+    public String getPath() {
+        return "dung_bullet";
+    }
+
+    // has no gravity, meaning it might remain forever, so set a tick value for it to cease
+    @Override
+    public void tick() {
+        super.tick();
+
+        final int lifeSpanInSecs = 5;
+        tick++;
+        if (tick >= lifeSpanInSecs * secsToTicks) {
+            if (!this.world.isClient)
+                this.world.createExplosion(
+                        this, this.getX(), this.getY(), this.getZ(), 1.5f, Explosion.DestructionType.BREAK);
+            this.world.sendEntityStatus(this, (byte) 3);
+            this.kill();
+        }
     }
 }

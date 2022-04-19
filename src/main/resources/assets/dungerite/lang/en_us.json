@@ -1,6 +1,9 @@
 {
   "item.dungerite.dung": "Dung",
   "item.dungerite.dung.tooltip": "Try throwing me :D",
+  "item.dungerite.dung_cannon": "Dung Cannon",
+  "item.dungerite.dung_cannon.tooltip": "Requires Dung Cannonball to shoot",
+  "item.dungerite.dung_cannonball": "Dung Cannonball",
   "item.dungerite.seaweed_bomb": "Seaweed Bomb",
   "item.dungerite.seaweed_bomb.tooltip": "Explodes on impact",
 

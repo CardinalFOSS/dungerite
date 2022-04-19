@@ -1,6 +1,6 @@
 package com.github.foss.dungerite.mixin.player;
 
-import com.github.foss.dungerite.Dungerite;
+import com.github.foss.dungerite.item.InitItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
@@ -34,28 +34,25 @@ public abstract class MixinPlayerEntity extends LivingEntity {
   private void poopPants(CallbackInfo ci) {
     // System.out.println("Woke up!");
     if (new Random().nextInt(4) != 0) return;
-    int dungs = new Random().nextInt(4) + 1;
-    world.spawnEntity(
-        new ItemEntity(
-            world,
-            this.getBlockX(),
-            this.getBlockY(),
-            this.getBlockZ(),
-            new ItemStack(Dungerite.DUNG, dungs)));
-    this.sendMessage(new TranslatableText("mixin.dungerite.poopPants"), false);
+    int numOfDungs = new Random().nextInt(4) + 1;
+    spawnDung(numOfDungs);
   }
 
   // random method that is activated every tick (0.05 seconds)
   @Inject(method = "travel", at = @At("TAIL"))
   private void pooping(Vec3d movementInput, CallbackInfo ci) {
     if (!this.isSneaking() || new Random().nextInt(100000) != 1) return; // REVERT
+    spawnDung(1);
+  }
+
+  private void spawnDung(int count) {
     world.spawnEntity(
-        new ItemEntity(
-            world,
-            this.getBlockX(),
-            this.getBlockY(),
-            this.getBlockZ(),
-            new ItemStack(Dungerite.DUNG, 1)));
+            new ItemEntity(
+                    world,
+                    this.getBlockX(),
+                    this.getBlockY(),
+                    this.getBlockZ(),
+                    new ItemStack(InitItems.items[0], count)));
     this.sendMessage(new TranslatableText("mixin.dungerite.poopPants"), false);
   }
 }

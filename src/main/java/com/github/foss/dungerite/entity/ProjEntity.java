@@ -20,7 +20,7 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 
-public abstract class ProjEntity extends ThrownItemEntity {
+public abstract class ProjEntity extends ThrownItemEntity implements EntityWithPath {
 
     protected static final int secsToTicks = 20;
 

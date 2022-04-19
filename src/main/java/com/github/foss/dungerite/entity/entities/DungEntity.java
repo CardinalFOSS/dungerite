@@ -2,6 +2,7 @@ package com.github.foss.dungerite.entity.entities;
 
 import com.github.foss.dungerite.Dungerite;
 import com.github.foss.dungerite.entity.ProjEntity;
+import com.github.foss.dungerite.item.InitItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -26,7 +27,7 @@ public class DungEntity extends ProjEntity {
 
   @Override
   protected Item getDefaultItem() {
-    return Dungerite.DUNG;
+        return InitItems.items[0]; // Dung
   }
 
   protected void onEntityHit(EntityHitResult entityHitResult) {
@@ -39,5 +40,10 @@ public class DungEntity extends ProjEntity {
           new StatusEffectInstance(StatusEffects.POISON, 5 * secsToTicks, 1),
           new StatusEffectInstance(StatusEffects.HUNGER, 10 * secsToTicks, 2),
         });
+  }
+
+  @Override
+  public String getPath() {
+    return "dung";
   }
 }

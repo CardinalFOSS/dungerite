@@ -1,10 +1,10 @@
 package com.github.foss.dungerite.item.items;
 
 import com.github.foss.dungerite.entity.entities.SeaweedBombEntity;
+import com.github.foss.dungerite.item.ItemWithPath;
 import com.github.foss.dungerite.item.ThrownItem;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -16,9 +16,14 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class SeaweedBomb extends Item implements ThrownItem {
+public class SeaweedBomb extends ItemWithPath implements ThrownItem {
   public SeaweedBomb(Settings settings) {
     super(settings);
+  }
+
+  @Override
+  public String getPath() {
+    return "seaweed_bomb";
   }
 
   public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {

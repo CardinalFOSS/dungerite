@@ -1,7 +1,7 @@
-package com.github.foss.dungerite.block;
+package com.github.foss.dungerite.block.blocks;
 
 import com.github.foss.dungerite.Dungerite;
-import net.minecraft.block.Block;
+import com.github.foss.dungerite.block.BlockWithPath;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.damage.DamageSource;
@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class DungBlock extends Block {
+public class DungBlock extends BlockWithPath {
   public DungBlock(Settings settings) {
     super(settings);
   }
@@ -53,5 +53,10 @@ public class DungBlock extends Block {
       ItemStack itemStack, BlockView world, List<Text> tooltip, TooltipContext tooltipContext) {
     tooltip.add(
         new TranslatableText("block.dungerite.dung_block.tooltip").formatted(Formatting.RED));
+  }
+
+  @Override
+  public String getPath() {
+    return "dung_block";
   }
 }
