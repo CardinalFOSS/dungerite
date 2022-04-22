@@ -17,23 +17,28 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public class Dung extends ItemWithPath implements ThrownItem {
-  public Dung(Settings settings) {
-    super(settings);
-  }
+    public Dung(Settings settings) {
+        super(settings);
+    }
 
-  @Override
-  public String getPath() {
-    return "dung";
-  }
+    @Override
+    public String getPath() {
+        return "dung";
+    }
 
-  public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-    onThrow(world, player, hand, SoundEvents.ENTITY_SNOWBALL_THROW, new DungEntity(world, player));
-    return TypedActionResult.success(player.getStackInHand(hand));
-  }
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        onThrow(
+                world,
+                player,
+                hand,
+                SoundEvents.ENTITY_SNOWBALL_THROW,
+                new DungEntity(world, player));
+        return TypedActionResult.success(player.getStackInHand(hand));
+    }
 
-  @Override
-  public void appendTooltip(
-      ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-    tooltip.add(new TranslatableText("item.dungerite.dung.tooltip").formatted(Formatting.RED));
-  }
+    @Override
+    public void appendTooltip(
+            ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+        tooltip.add(new TranslatableText("item.dungerite.dung.tooltip").formatted(Formatting.RED));
+    }
 }

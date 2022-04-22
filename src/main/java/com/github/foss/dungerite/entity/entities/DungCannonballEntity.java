@@ -17,9 +17,12 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 
+import static com.github.foss.dungerite.Dungerite.secsToTicks;
+
 
 public class DungCannonballEntity extends ProjEntity {
     private float damage = 0.0F;
+    private float explosionPower = 0.0F;
     private int tick = 0;
 
     public float getDamage() {
@@ -30,6 +33,13 @@ public class DungCannonballEntity extends ProjEntity {
         this.damage = newDamage;
     }
 
+    public float getExplosionPower() {
+        return explosionPower;
+    }
+
+    public void setExplosionPower(float newExplosionPower) {
+        this.explosionPower = newExplosionPower;
+    }
 
     public DungCannonballEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);
@@ -51,8 +61,8 @@ public class DungCannonballEntity extends ProjEntity {
         // checks for null
         final SoundEvent soundEvent = Dungerite.SPLAT;
         final StatusEffectInstance[] effects = new StatusEffectInstance[]{
-                new StatusEffectInstance(StatusEffects.HUNGER, 10*20, 0),
-                new StatusEffectInstance(StatusEffects.SLOWNESS, 3*20, 0)
+                new StatusEffectInstance(StatusEffects.NAUSEA, 3 * secsToTicks, 0),
+                new StatusEffectInstance(StatusEffects.SLOWNESS, 5 * secsToTicks, 0)
         };
 
         if (entity instanceof LivingEntity livingEntity) {
@@ -70,7 +80,7 @@ public class DungCannonballEntity extends ProjEntity {
         super.onCollision(hitResult);
         if (!this.world.isClient)
             this.world.createExplosion(
-                    this, this.getX(), this.getY(), this.getZ(), 1.0f, Explosion.DestructionType.BREAK);
+                    this, this.getX(), this.getY(), this.getZ(), explosionPower * 2.0F + 0.5F, Explosion.DestructionType.DESTROY);
     }
 
     @Override
@@ -80,7 +90,7 @@ public class DungCannonballEntity extends ProjEntity {
 
     @Override
     public String getPath() {
-        return "dung_bullet";
+        return "dung_cannonball";
     }
 
     // has no gravity, meaning it might remain forever, so set a tick value for it to cease
@@ -93,7 +103,7 @@ public class DungCannonballEntity extends ProjEntity {
         if (tick >= lifeSpanInSecs * secsToTicks) {
             if (!this.world.isClient)
                 this.world.createExplosion(
-                        this, this.getX(), this.getY(), this.getZ(), 1.5f, Explosion.DestructionType.BREAK);
+                        this, this.getX(), this.getY(), this.getZ(), explosionPower * 2.0F + 0.5F, Explosion.DestructionType.DESTROY);
             this.world.sendEntityStatus(this, (byte) 3);
             this.kill();
         }

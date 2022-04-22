@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " DS",
+    "DTS",
+    " DS"
+  ],
+  "key": {
+    "D": {
+      "item": "dungerite:dung"
+    },
+    "S":{
+      "item": "minecraft:string"
+    },
+    "T": {
+      "item": "minecraft:tnt"
+    }
+  },
+  "result": {
+    "item": "dungerite:dung_cannon",
+    "count": 1
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "dungerite:dung"
+    }
+  ],
+  "result": {
+    "item": "dungerite:dung_cannonball",
+    "count": 8
+  }
+}

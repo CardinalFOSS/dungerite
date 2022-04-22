@@ -5,6 +5,7 @@ import com.github.foss.dungerite.entity.entities.DungEntity;
 import com.github.foss.dungerite.entity.entities.SeaweedBombEntity;
 import com.github.foss.dungerite.item.items.Dung;
 import com.github.foss.dungerite.item.items.DungCannonball;
+import com.github.foss.dungerite.item.items.Fireball;
 import com.github.foss.dungerite.item.items.SeaweedBomb;
 import com.github.foss.dungerite.item.weapons.DungCannon;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -22,13 +23,14 @@ import static com.github.foss.dungerite.Dungerite.MOD_ID;
 
 public interface InitItems {
     ItemWithPath[] items = {
-        new Dung(new FabricItemSettings()),
+        new Dung(new FabricItemSettings().maxCount(16)),
         new SeaweedBomb(new FabricItemSettings()),
-        new DungCannonball(new FabricItemSettings())
+        new DungCannonball(new FabricItemSettings()),
+        new Fireball(new FabricItemSettings())
     };
 
     /* Special cases */
-    DungCannon DUNG_CANNON = new DungCannon(new FabricItemSettings());
+    DungCannon DUNG_CANNON = new DungCannon(new FabricItemSettings().maxCount(1));
 
     default void registerItems() {
         for (ItemWithPath item : items) {

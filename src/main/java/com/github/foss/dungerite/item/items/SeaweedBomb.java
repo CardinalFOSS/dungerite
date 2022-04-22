@@ -16,30 +16,37 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
+import static com.github.foss.dungerite.Dungerite.secsToTicks;
+
 public class SeaweedBomb extends ItemWithPath implements ThrownItem {
-  public SeaweedBomb(Settings settings) {
-    super(settings);
-  }
+    public SeaweedBomb(Settings settings) {
+        super(settings);
+    }
 
-  @Override
-  public String getPath() {
-    return "seaweed_bomb";
-  }
+    @Override
+    public String getPath() {
+        return "seaweed_bomb";
+    }
 
-  public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-    // a cooldown to the item's right-click use, similar to Ender Pearls.
-    player.getItemCooldownManager().set(this, 5 * 20);
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        // a cooldown to the item's right-click use, similar to Ender Pearls.
+        player.getItemCooldownManager().set(this, 3 * secsToTicks);
 
-    onThrow(
-        world, player, hand, SoundEvents.ENTITY_ARROW_SHOOT, new SeaweedBombEntity(world, player));
+        onThrow(
+                world,
+                player,
+                hand,
+                SoundEvents.ENTITY_ARROW_SHOOT,
+                new SeaweedBombEntity(world, player));
 
-    return TypedActionResult.success(player.getStackInHand(hand));
-  }
+        return TypedActionResult.success(player.getStackInHand(hand));
+    }
 
-  @Override
-  public void appendTooltip(
-      ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-    tooltip.add(
-        new TranslatableText("item.dungerite.seaweed_bomb.tooltip").formatted(Formatting.RED));
-  }
+    @Override
+    public void appendTooltip(
+            ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+        tooltip.add(
+                new TranslatableText("item.dungerite.seaweed_bomb.tooltip")
+                        .formatted(Formatting.RED));
+    }
 }

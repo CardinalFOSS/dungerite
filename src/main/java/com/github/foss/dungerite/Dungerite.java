@@ -31,6 +31,7 @@ import java.util.List;
 
 public class Dungerite implements ModInitializer, InitBlocks, InitItems {
     public static final String MOD_ID = "dungerite";
+    public static final int secsToTicks = 20;
     public static final Identifier PACKET_ID =
             new Identifier(MOD_ID, "spawn_packet"); // used for creating entity server-side
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);

@@ -11,17 +11,20 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public interface InitBlocks {
-  BlockWithPath[] blocks = {
-          new DungBlock(FabricBlockSettings.of(Material.SOLID_ORGANIC).hardness(2.0F).requiresTool())
-  };
-  
-  default void registerBlocks() {
-    for (BlockWithPath blockWithPath : blocks) {
-      Registry.register(Registry.BLOCK, new Identifier(Dungerite.MOD_ID, blockWithPath.getPath()), blockWithPath);
-      Registry.register(
-              Registry.ITEM,
-              new Identifier(Dungerite.MOD_ID, blockWithPath.getPath()),
-              new BlockItem(blockWithPath, new FabricItemSettings().group(ItemGroup.MISC)));
+    BlockWithPath[] blocks = {
+        new DungBlock(FabricBlockSettings.of(Material.SOLID_ORGANIC).hardness(2.0F).requiresTool())
+    };
+
+    default void registerBlocks() {
+        for (BlockWithPath blockWithPath : blocks) {
+            Registry.register(
+                    Registry.BLOCK,
+                    new Identifier(Dungerite.MOD_ID, blockWithPath.getPath()),
+                    blockWithPath);
+            Registry.register(
+                    Registry.ITEM,
+                    new Identifier(Dungerite.MOD_ID, blockWithPath.getPath()),
+                    new BlockItem(blockWithPath, new FabricItemSettings().group(ItemGroup.MISC)));
+        }
     }
-  }
 }
