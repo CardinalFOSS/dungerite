@@ -7,7 +7,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -52,6 +51,6 @@ public abstract class MixinPlayerEntity extends LivingEntity {
                         this.getBlockY(),
                         this.getBlockZ(),
                         new ItemStack(InitItems.items[0], count)));
-        this.sendMessage(new TranslatableText("mixin.dungerite.poopPants"), false);
+        this.sendMessage(Text.translatable("mixin.dungerite.poopPants"), false);
     }
 }

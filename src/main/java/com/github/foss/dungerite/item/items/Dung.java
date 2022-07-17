@@ -8,7 +8,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -39,6 +38,6 @@ public class Dung extends ItemWithPath implements ThrownItem {
     @Override
     public void appendTooltip(
             ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
-        tooltip.add(new TranslatableText("item.dungerite.dung.tooltip").formatted(Formatting.RED));
+        tooltip.add(Text.translatable("item.dungerite.dung.tooltip").formatted(Formatting.RED));
     }
 }

@@ -11,7 +11,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
@@ -47,7 +46,7 @@ public class DungBlock extends BlockWithPath {
             player.damage(DamageSource.MAGIC, 2);
 
             // sends a message telling the player they have become stinky
-            player.sendMessage(new TranslatableText("block.dungerite.dung_block.onUse"), false);
+            player.sendMessage(Text.translatable("block.dungerite.dung_block.onUse"), false);
         }
         return ActionResult.SUCCESS;
     }
@@ -59,7 +58,7 @@ public class DungBlock extends BlockWithPath {
             List<Text> tooltip,
             TooltipContext tooltipContext) {
         tooltip.add(
-                new TranslatableText("block.dungerite.dung_block.tooltip")
+                Text.translatable("block.dungerite.dung_block.tooltip")
                         .formatted(Formatting.RED));
     }
 
