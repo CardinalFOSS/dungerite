@@ -2,13 +2,15 @@ package com.github.foss.dungerite;
 
 import com.github.foss.dungerite.block.BlockWithPath;
 import com.github.foss.dungerite.block.InitBlocks;
+import com.github.foss.dungerite.enchant.InitEnchants;
 import com.github.foss.dungerite.entity.InitEntities;
 import com.github.foss.dungerite.entity.entities.DungCannonballEntity;
 import com.github.foss.dungerite.entity.entities.DungEntity;
 import com.github.foss.dungerite.entity.entities.SeaweedBombEntity;
 import com.github.foss.dungerite.item.InitItems;
 import com.github.foss.dungerite.item.ItemWithPath;
-import com.github.foss.dungerite.statuseffect.StinkyEffect;
+import com.github.foss.dungerite.statuseffect.statuseffects.BingQiLinEffect;
+import com.github.foss.dungerite.statuseffect.statuseffects.StinkyEffect;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
@@ -29,7 +31,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dungerite implements ModInitializer, InitBlocks, InitItems {
+public class Dungerite implements ModInitializer, InitBlocks, InitItems, InitEnchants {
     public static final String MOD_ID = "dungerite";
     public static final int secsToTicks = 20;
     public static final Identifier PACKET_ID =
@@ -48,12 +50,15 @@ public class Dungerite implements ModInitializer, InitBlocks, InitItems {
     public static final Identifier SPLAT_ID =
             new Identifier(MOD_ID + ":splat"); // used for DUNG on contact
     public static final SoundEvent SPLAT = new SoundEvent(SPLAT_ID);
+    public static final Identifier BING_QI_LIN_ID = new Identifier(MOD_ID + ":bing_qi_lin");
+    public static final SoundEvent BING_QI_LIN = new SoundEvent(BING_QI_LIN_ID);
 
     // Particle
     public static final DefaultParticleType FART_PARTICLE = FabricParticleTypes.simple();
 
     // Effects
     public static final StatusEffect STINKY_EFFECT = new StinkyEffect();
+    public static final StatusEffect BING_QI_LIN_EFFECT = new BingQiLinEffect();
 
     // Entities
     public static final EntityType<DungEntity> DungEntityType = InitEntities.DungEntityType;
@@ -68,12 +73,14 @@ public class Dungerite implements ModInitializer, InitBlocks, InitItems {
         registerItems();
         registerBlocks();
         registerToGroup();
+        registerEnchants();
 
         registerDispenserBehavior();
 
         // Sounds
         Registry.register(Registry.SOUND_EVENT, FART_ID, FART);
         Registry.register(Registry.SOUND_EVENT, SPLAT_ID, SPLAT);
+        Registry.register(Registry.SOUND_EVENT, BING_QI_LIN_ID, BING_QI_LIN);
 
         // Particle
         Registry.register(
@@ -82,6 +89,9 @@ public class Dungerite implements ModInitializer, InitBlocks, InitItems {
         // Effects
         Registry.register(
                 Registry.STATUS_EFFECT, new Identifier(MOD_ID, "stinky_effect"), STINKY_EFFECT);
+        Registry.register(
+                Registry.STATUS_EFFECT, new Identifier(MOD_ID, "bing_qi_lin_effect"), BING_QI_LIN_EFFECT
+        );
 
         // Double jump
         ServerPlayNetworking.registerGlobalReceiver(

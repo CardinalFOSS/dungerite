@@ -1,4 +1,4 @@
-package com.github.foss.dungerite.statuseffect;
+package com.github.foss.dungerite.statuseffect.statuseffects;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;

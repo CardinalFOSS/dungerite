@@ -10,5 +10,11 @@
     "sounds": [
       "dungerite:splat"
     ]
+  },
+  "bing_qi_lin": {
+    "subtitle": "subtitles.dungerite.bing_qi_lin",
+    "sounds": [
+      "dungerite:bing_qi_lin"
+    ]
   }
 }

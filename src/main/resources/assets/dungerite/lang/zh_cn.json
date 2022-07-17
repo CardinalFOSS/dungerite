@@ -12,9 +12,11 @@
   "block.dungerite.dung_block.onUse": "哎呀！你好臭啊！",
 
   "subtitles.dungerite.fart": "放屁",
-  "subtitles.dungerite.splat": "啪",
+  "subtitles.dungerite.splat": "啪嗒",
 
   "effect.dungerite.stinky_effect": "臭",
+
+  "enchantment.dungerite.bing_qi_lin_enchant": "冰淇淋",
 
   "mixin.dungerite.poopPants": "大便拉到裤子里啦！",
 
