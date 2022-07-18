@@ -3,6 +3,8 @@ package com.github.foss.dungerite.mixin;
 import com.github.foss.dungerite.Dungerite;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.FleeEntityGoal;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.GoalSelector;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,6 +32,8 @@ public class MixinHostileEntity extends PathAwareEntity {
             for (PlayerEntity player : playerToAvoid) {
                 // using for loop because closest player might select player without effects when in
                 // proximity
+
+                /* Probably laggy as hell */
                 if (player.distanceTo(this) <= 6 && player.hasStatusEffect(Dungerite.STINKY_EFFECT))
                     this.goalSelector.add(1, fleePlayerGoal);
                 else this.goalSelector.remove(fleePlayerGoal);

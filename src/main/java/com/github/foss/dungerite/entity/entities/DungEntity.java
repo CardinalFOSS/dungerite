@@ -41,6 +41,7 @@ public class DungEntity extends ProjEntity {
                     new StatusEffectInstance(StatusEffects.NAUSEA, 5 * secsToTicks, 0),
                     new StatusEffectInstance(StatusEffects.POISON, 10 * secsToTicks, 1),
                     new StatusEffectInstance(StatusEffects.HUNGER, 20 * secsToTicks, 2),
+                    new StatusEffectInstance(Dungerite.STINKY_EFFECT, 10 * secsToTicks, 0)
                 });
     }
 

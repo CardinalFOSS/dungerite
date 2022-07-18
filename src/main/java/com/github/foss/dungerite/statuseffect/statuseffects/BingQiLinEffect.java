@@ -10,7 +10,7 @@ import net.minecraft.entity.mob.HostileEntity;
 
 public class BingQiLinEffect extends StatusEffect {
     private boolean end = false;
-    public BingQiLinEffect() { super(StatusEffectCategory.BENEFICIAL, 0xA52A2A); }
+    public BingQiLinEffect() { super(StatusEffectCategory.BENEFICIAL, 0x29A6A6); }
 
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
