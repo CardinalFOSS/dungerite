@@ -4,13 +4,19 @@ import com.github.foss.dungerite.block.InitBlocks;
 import com.github.foss.dungerite.item.InitItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class DungeriteAxe extends AxeItem {
     public DungeriteAxe(ToolMaterial material, float attackDamage, float attackSpeed, Settings settings) {
@@ -40,4 +46,11 @@ public class DungeriteAxe extends AxeItem {
         }
         return super.postHit(stack, target, attacker);
     }
+
+    @Override
+    public void appendTooltip(ItemStack itemStack, World world, List<Text> tooltip, TooltipContext tooltipContext) {
+        tooltip.add(
+                Text.translatable("item.dungerite.dungerite_axe.tooltip").formatted(Formatting.RED));
+    }
+
 }
