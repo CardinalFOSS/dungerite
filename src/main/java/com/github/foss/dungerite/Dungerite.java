@@ -19,7 +19,10 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ToolItem;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.sound.SoundEvent;
@@ -130,6 +133,9 @@ public class Dungerite implements ModInitializer, InitBlocks, InitItems, InitEnc
 
         for (BlockWithPath block : blocks) stacks.add(new ItemStack(block));
         for (ItemWithPath item : items) stacks.add(new ItemStack(item));
+        for (ToolItem toolItem : toolItems) stacks.add(new ItemStack(toolItem));
+        for (ArmorItem armorItem : armorItems) stacks.add(new ItemStack(armorItem));
+
         FabricItemGroupBuilder.create(new Identifier(MOD_ID, "dung"))
                 .icon(() -> new ItemStack(items[0])) // Dung
                 .appendItems(stack -> stack.addAll(stacks))

@@ -1,11 +1,20 @@
 {
   "item.dungerite.dung": "屎",
-  "item.dungerite.dung.tooltip": "别乱仍",
-  "item.dungerite.dung_cannon": "大便炮",
-  "item.dungerite.dung_cannon.tooltip": "射击需要大便炮弹",
+  "item.dungerite.dung.tooltip": "别乱仍 O_O",
+  "item.dungerite.dung_cannon": "大便大炮",
+  "item.dungerite.dung_cannon.tooltip": "伤害巨大\n射击需要大便炮弹",
   "item.dungerite.dung_cannonball": "大便炮弹",
   "item.dungerite.seaweed_bomb": "海苔炸弹",
-  "item.dungerite.seaweed_bomb.tooltip": "击中任何东西瞬间爆炸",
+  "item.dungerite.seaweed_bomb.tooltip": "击中瞬间爆炸",
+  "item.dungerite.dungerite_sword": "大便合金剑",
+  "item.dungerite.dungerite_pickaxe": "大便合金镐",
+  "item.dungerite.dungerite_axe": "大便合金斧",
+  "item.dungerite.dungerite_shovel": "大便合金铲",
+  "item.dungerite.dungerite_hoe": "大便合金锄",
+  "item.dungerite.dungerite_helmet": "大便合金头盔",
+  "item.dungerite.dungerite_chestplate": "大便合金胸甲",
+  "item.dungerite.dungerite_leggings": "大便合金护腿",
+  "item.dungerite.dungerite_boots": "大便合金靴子",
 
   "block.dungerite.dung_block": "大便方块",
   "block.dungerite.dung_block.tooltip": "味道不错哦",
@@ -14,7 +23,7 @@
   "subtitles.dungerite.fart": "放屁",
   "subtitles.dungerite.splat": "啪嗒",
 
-  "effect.dungerite.stinky_effect": "臭",
+  "effect.dungerite.stinky_effect": "臭臭",
 
   "enchantment.dungerite.bing_qi_lin_enchant": "冰淇淋",
 

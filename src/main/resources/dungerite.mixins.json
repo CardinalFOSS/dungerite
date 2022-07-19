@@ -4,11 +4,12 @@
   "package": "com.github.foss.dungerite.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "player.MixinDoubleJump",
-    "MixinHostileEntity",
-    "player.MixinPlayerEntity"
+    "MixinHostileEntity"
   ],
   "client": [
+    "player.MixinDoubleJump",
+
+    "player.MixinPlayerEntity"
   ],
   "injectors": {
     "defaultRequire": 1
