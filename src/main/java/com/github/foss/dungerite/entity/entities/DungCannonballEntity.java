@@ -88,11 +88,6 @@ public class DungCannonballEntity extends ProjEntity {
         return InitItems.items[2]; // DungBullet
     }
 
-    @Override
-    public String getPath() {
-        return "dung_cannonball";
-    }
-
     // has no gravity, meaning it might remain forever, so set a tick value for it to cease
     @Override
     public void tick() {

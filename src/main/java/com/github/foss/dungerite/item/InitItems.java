@@ -29,62 +29,82 @@ import static com.github.foss.dungerite.Dungerite.MOD_ID;
 
 public interface InitItems {
     /* Variables */
-    ItemWithPath[] items = {
+    ArmorMaterial dungeriteArmorMaterial = new DungeriteArmorMaterial();
+
+    Item[] items = {
+        /* Items */
         new Dung(new FabricItemSettings().maxCount(16)),
         new SeaweedBomb(new FabricItemSettings()),
         new DungCannonball(new FabricItemSettings()),
+
+        /* Armor */
+        new ArmorItem(
+                dungeriteArmorMaterial,
+                EquipmentSlot.HEAD,
+                new Item.Settings().group(ItemGroup.COMBAT)),
+        new ArmorItem(
+                dungeriteArmorMaterial,
+                EquipmentSlot.CHEST,
+                new Item.Settings().group(ItemGroup.COMBAT)),
+        new ArmorItem(
+                dungeriteArmorMaterial,
+                EquipmentSlot.LEGS,
+                new Item.Settings().group(ItemGroup.COMBAT)),
+        new ArmorItem(
+                dungeriteArmorMaterial,
+                EquipmentSlot.FEET,
+                new Item.Settings().group(ItemGroup.COMBAT)),
+
+        /* Tools */
+        new DungeriteSword(
+                DungeriteToolMaterial.INSTANCE,
+                -5,
+                -2.8F,
+                new Item.Settings().group(ItemGroup.COMBAT)),
+        new DungeritePickaxe(
+                DungeriteToolMaterial.INSTANCE,
+                1,
+                -1.8F,
+                new Item.Settings().group(ItemGroup.TOOLS)),
+        new DungeriteAxe(
+                DungeriteToolMaterial.INSTANCE,
+                1,
+                -3.5F,
+                new Item.Settings().group(ItemGroup.TOOLS)),
+        new DungeriteShovel(
+                DungeriteToolMaterial.INSTANCE,
+                0,
+                -1.8F,
+                new Item.Settings().group(ItemGroup.TOOLS)),
+        new DungeriteHoe(
+                DungeriteToolMaterial.INSTANCE,
+                5,
+                -2.0F,
+                new Item.Settings().group(ItemGroup.TOOLS)),
+    };
+    String[] paths = {
+        "dung",
+        "seaweed_bomb",
+        "dung_cannonball",
+        "dungerite_helmet",
+        "dungerite_chestplate",
+        "dungerite_leggings",
+        "dungerite_boots",
+        "dungerite_sword",
+        "dungerite_pickaxe",
+        "dungerite_axe",
+        "dungerite_shovel",
+        "dungerite_hoe"
     };
 
     DungCannon DUNG_CANNON = new DungCannon(new FabricItemSettings().maxCount(1));
-    ArmorMaterial dungeriteArmorMaterial = new DungeriteArmorMaterial();
-
-    ArmorItem[] armorItems = {
-            new ArmorItem(dungeriteArmorMaterial, EquipmentSlot.HEAD, new Item.Settings().group(ItemGroup.COMBAT)),
-            new ArmorItem(dungeriteArmorMaterial, EquipmentSlot.CHEST, new Item.Settings().group(ItemGroup.COMBAT)),
-            new ArmorItem(dungeriteArmorMaterial, EquipmentSlot.LEGS, new Item.Settings().group(ItemGroup.COMBAT)),
-            new ArmorItem(dungeriteArmorMaterial, EquipmentSlot.FEET, new Item.Settings().group(ItemGroup.COMBAT)),
-    };
-
-    String[] armorItemPaths = {
-            "dungerite_helmet",
-            "dungerite_chestplate",
-            "dungerite_leggings",
-            "dungerite_boots"
-    };
-    ToolItem[] toolItems = {
-            new DungeriteSword(
-                    DungeriteToolMaterial.INSTANCE, -5, -2.8F, new Item.Settings().group(ItemGroup.COMBAT)),
-            new DungeritePickaxe(
-                    DungeriteToolMaterial.INSTANCE, 1, -1.8F, new Item.Settings().group(ItemGroup.TOOLS)),
-            new DungeriteAxe(
-                    DungeriteToolMaterial.INSTANCE, 1, -3.5F, new Item.Settings().group(ItemGroup.TOOLS)),
-            new DungeriteShovel(
-                    DungeriteToolMaterial.INSTANCE, 0, -1.8F, new Item.Settings().group(ItemGroup.TOOLS)),
-            new DungeriteHoe(
-                    DungeriteToolMaterial.INSTANCE, 5, -1.8F, new Item.Settings().group(ItemGroup.TOOLS)),
-    };
-    String[] toolItemPaths = {
-            "dungerite_sword",
-            "dungerite_pickaxe",
-            "dungerite_axe",
-            "dungerite_shovel",
-            "dungerite_hoe"
-    };
-
 
     default void registerItems() {
-        int toolIndex = 0;
-        int armorIndex = 0;
+        int i = 0;
 
-        for (ItemWithPath item : items)
-            Registry.register(Registry.ITEM, new Identifier(MOD_ID, item.getPath()), item);
-        for (ToolItem toolItem : toolItems) {
-            Registry.register(Registry.ITEM, new Identifier(MOD_ID, toolItemPaths[toolIndex]), toolItem);
-            toolIndex++;
-        }
-        for (ArmorItem armorItem : armorItems) {
-            Registry.register(Registry.ITEM, new Identifier(MOD_ID, armorItemPaths[armorIndex]), armorItem);
-            armorIndex++;
+        for (Item item : items) {
+            Registry.register(Registry.ITEM, new Identifier(MOD_ID, paths[i]), item);
+            i++;
         }
         /* Special cases */
         Registry.register(Registry.ITEM, new Identifier(MOD_ID, "dung_cannon"), DUNG_CANNON);

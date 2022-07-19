@@ -44,9 +44,4 @@ public class DungEntity extends ProjEntity {
                     new StatusEffectInstance(Dungerite.STINKY_EFFECT, 10 * secsToTicks, 0)
                 });
     }
-
-    @Override
-    public String getPath() {
-        return "dung";
-    }
 }

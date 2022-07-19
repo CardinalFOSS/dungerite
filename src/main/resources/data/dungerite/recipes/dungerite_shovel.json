@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing",
+
+  "base": {
+    "item": "minecraft:netherite_shovel"
+  },
+
+  "addition": {
+    "item": "dungerite:dung_block"
+  },
+
+  "result": {
+    "item": "dungerite:dungerite_shovel",
+    "count": 1
+  }
+}

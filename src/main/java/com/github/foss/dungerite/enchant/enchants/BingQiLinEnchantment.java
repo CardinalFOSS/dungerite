@@ -1,8 +1,8 @@
 package com.github.foss.dungerite.enchant.enchants;
 
 import com.github.foss.dungerite.Dungerite;
-import com.github.foss.dungerite.enchant.EnchantsWithPath;
 import net.minecraft.block.Blocks;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
@@ -18,7 +18,7 @@ import java.util.Random;
 
 import static com.github.foss.dungerite.Dungerite.secsToTicks;
 
-public class BingQiLinEnchantment extends EnchantsWithPath {
+public class BingQiLinEnchantment extends Enchantment {
     public BingQiLinEnchantment() {
         super(Rarity.RARE, EnchantmentTarget.WEAPON, new EquipmentSlot[] {EquipmentSlot.MAINHAND} );
     }
@@ -51,10 +51,5 @@ public class BingQiLinEnchantment extends EnchantsWithPath {
             }
         }
         super.onTargetDamaged(user, target, level);
-    }
-
-    @Override
-    public String getPath() {
-        return "bing_qi_lin_enchant";
     }
 }

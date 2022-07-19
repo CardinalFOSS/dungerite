@@ -3,12 +3,12 @@ package com.github.foss.dungerite.item.weapons;
 import com.github.foss.dungerite.Dungerite;
 import com.github.foss.dungerite.entity.entities.DungCannonballEntity;
 import com.github.foss.dungerite.item.InitItems;
-import com.github.foss.dungerite.item.ItemWithPath;
 import com.github.foss.dungerite.item.RangedWeapon;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BowItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.stat.Stats;
@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class DungCannon extends BowItem implements RangedWeapon {
-    private static final ItemWithPath DUNG_CANNONBALL = InitItems.items[2];
+    private static final Item DUNG_CANNONBALL = InitItems.items[2];
     public static final Predicate<ItemStack> DUNG_CANNONBALL_PROJECTILE = (stack) -> stack.isOf(DUNG_CANNONBALL);
     public DungCannon(Settings settings) {
         super(settings);

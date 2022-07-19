@@ -1,6 +1,5 @@
 package com.github.foss.dungerite;
 
-import com.github.foss.dungerite.block.BlockWithPath;
 import com.github.foss.dungerite.block.InitBlocks;
 import com.github.foss.dungerite.enchant.InitEnchants;
 import com.github.foss.dungerite.entity.InitEntities;
@@ -8,31 +7,34 @@ import com.github.foss.dungerite.entity.entities.DungCannonballEntity;
 import com.github.foss.dungerite.entity.entities.DungEntity;
 import com.github.foss.dungerite.entity.entities.SeaweedBombEntity;
 import com.github.foss.dungerite.item.InitItems;
-import com.github.foss.dungerite.item.ItemWithPath;
 import com.github.foss.dungerite.statuseffect.statuseffects.BingQiLinEffect;
 import com.github.foss.dungerite.statuseffect.statuseffects.StinkyEffect;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolItem;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.registry.Registry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Dungerite implements ModInitializer, InitBlocks, InitItems, InitEnchants {
     public static final String MOD_ID = "dungerite";
@@ -70,6 +72,9 @@ public class Dungerite implements ModInitializer, InitBlocks, InitItems, InitEnc
     public static final EntityType<DungCannonballEntity> DungCannonballEntityType =
             InitEntities.DungCannonballEntityType;
 
+    /* Buff */
+    public static final ArrayList<UUID> FULL_SET_STINKY = new ArrayList<>();
+
     @Override
     public void onInitialize() {
         LOGGER.info("Loading Dungerite...");
@@ -93,8 +98,9 @@ public class Dungerite implements ModInitializer, InitBlocks, InitItems, InitEnc
         Registry.register(
                 Registry.STATUS_EFFECT, new Identifier(MOD_ID, "stinky_effect"), STINKY_EFFECT);
         Registry.register(
-                Registry.STATUS_EFFECT, new Identifier(MOD_ID, "bing_qi_lin_effect"), BING_QI_LIN_EFFECT
-        );
+                Registry.STATUS_EFFECT,
+                new Identifier(MOD_ID, "bing_qi_lin_effect"),
+                BING_QI_LIN_EFFECT);
 
         // Double jump
         ServerPlayNetworking.registerGlobalReceiver(
@@ -122,6 +128,32 @@ public class Dungerite implements ModInitializer, InitBlocks, InitItems, InitEnc
                                                     }));
                 });
 
+        /* Gives "stinky" buff if full set of armor is worn */
+        UseItemCallback.EVENT.register(
+                (player, world, hand) -> {
+                    AtomicInteger armorPieces = new AtomicInteger(4);
+                    ArmorItem[] dungArmors = {
+                        (ArmorItem) items[3], // Dungerite Helmet
+                        (ArmorItem) items[4], // Dungerite Chestplate
+                        (ArmorItem) items[5], // Dungerite Leggings
+                        (ArmorItem) items[6] // Dungerite Boots
+                    };
+
+                    player.getArmorItems()
+                            .forEach(
+                                    (armor) -> {
+                                        for (ArmorItem dungArmor : dungArmors) {
+                                            if (armor.isOf(dungArmor)) {
+                                                armorPieces.getAndDecrement();
+                                            }
+                                        }
+                                    });
+                    if (armorPieces.get() == 0) FULL_SET_STINKY.add(player.getUuid());
+                    else FULL_SET_STINKY.remove(player.getUuid());
+
+                    return TypedActionResult.pass(player.getStackInHand(hand));
+                });
+
         LOGGER.info("Dungerite loaded!");
     }
 
@@ -131,10 +163,8 @@ public class Dungerite implements ModInitializer, InitBlocks, InitItems, InitEnc
         /* Special cases */
         stacks.add(new ItemStack(InitItems.DUNG_CANNON));
 
-        for (BlockWithPath block : blocks) stacks.add(new ItemStack(block));
-        for (ItemWithPath item : items) stacks.add(new ItemStack(item));
-        for (ToolItem toolItem : toolItems) stacks.add(new ItemStack(toolItem));
-        for (ArmorItem armorItem : armorItems) stacks.add(new ItemStack(armorItem));
+        for (Block block : blocks) stacks.add(new ItemStack(block));
+        for (Item item : items) stacks.add(new ItemStack(item));
 
         FabricItemGroupBuilder.create(new Identifier(MOD_ID, "dung"))
                 .icon(() -> new ItemStack(items[0])) // Dung

@@ -1,9 +1,12 @@
 package com.github.foss.dungerite.mixin.player;
 
+import com.github.foss.dungerite.Dungerite;
 import com.github.foss.dungerite.item.InitItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
@@ -30,6 +33,9 @@ public abstract class MixinPlayerEntity extends LivingEntity {
     @Shadow
     public abstract void sendMessage(Text message, boolean actionBar);
 
+    @Shadow
+    public abstract boolean isPlayer();
+
     // method that randomly makes player poop after sleep
     @Inject(method = "wakeUp(ZZ)V", at = @At("TAIL"))
     private void poopPants(CallbackInfo ci) {
@@ -41,6 +47,14 @@ public abstract class MixinPlayerEntity extends LivingEntity {
     @Inject(method = "travel", at = @At("TAIL"))
     private void pooping(Vec3d movementInput, CallbackInfo ci) {
         if (this.isSneaking() && new Random().nextInt(300 * secsToTicks) == 1) spawnDung(1);
+        if (Dungerite.FULL_SET_STINKY.contains(this.uuid)) {
+            this.addStatusEffect(
+                    new StatusEffectInstance(
+                            Dungerite.STINKY_EFFECT, 11 * secsToTicks, 0, false, false));
+            this.addStatusEffect(
+                    new StatusEffectInstance(
+                            StatusEffects.SPEED, 11 * secsToTicks, 0, false, false));
+        }
     }
 
     private void spawnDung(int count) {

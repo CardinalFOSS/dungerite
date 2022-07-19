@@ -9,6 +9,7 @@ import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.mob.HostileEntity;
 
 public class BingQiLinEffect extends StatusEffect {
+    /* AMPLIFIERS DO NOT AFFECT BEHAVIOR */
     private boolean end = false;
     public BingQiLinEffect() { super(StatusEffectCategory.BENEFICIAL, 0x29A6A6); }
 

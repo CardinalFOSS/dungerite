@@ -20,7 +20,7 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 
-public abstract class ProjEntity extends ThrownItemEntity implements EntityWithPath {
+public abstract class ProjEntity extends ThrownItemEntity {
     public ProjEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -78,7 +78,7 @@ public abstract class ProjEntity extends ThrownItemEntity implements EntityWithP
     }
 
     @Override
-    public Packet createSpawnPacket() {
+    public Packet<?> createSpawnPacket() {
         return EntitySpawnPacket.create(this, Dungerite.PACKET_ID);
     }
 }

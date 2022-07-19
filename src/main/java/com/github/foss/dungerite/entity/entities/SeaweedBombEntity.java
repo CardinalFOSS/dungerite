@@ -57,9 +57,4 @@ public class SeaweedBombEntity extends ProjEntity {
                     2.0f,
                     Explosion.DestructionType.DESTROY);
     }
-
-    @Override
-    public String getPath() {
-        return "seaweed_bomb";
-    }
 }

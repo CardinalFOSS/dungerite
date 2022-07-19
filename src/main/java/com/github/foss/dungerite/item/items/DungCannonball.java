@@ -1,15 +1,10 @@
 package com.github.foss.dungerite.item.items;
 
-import com.github.foss.dungerite.item.ItemWithPath;
 import com.github.foss.dungerite.item.ThrownItem;
+import net.minecraft.item.Item;
 
-public class DungCannonball extends ItemWithPath implements ThrownItem {
+public class DungCannonball extends Item implements ThrownItem {
     public DungCannonball(Settings settings) {
         super(settings);
-    }
-
-    @Override
-    public String getPath() {
-        return "dung_cannonball";
     }
 }

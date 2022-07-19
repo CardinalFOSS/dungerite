@@ -10,15 +10,19 @@ import net.minecraft.item.ToolMaterial;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import static com.github.foss.dungerite.Dungerite.secsToTicks;
+
 public class DungeritePickaxe extends PickaxeItem {
-    public DungeritePickaxe(ToolMaterial material, int attackDamage, float attackSpeed, Settings settings) {
+    public DungeritePickaxe(
+            ToolMaterial material, int attackDamage, float attackSpeed, Settings settings) {
         super(material, attackDamage, attackSpeed, settings);
     }
 
     @Override
-    public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
+    public boolean postMine(
+            ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
         miner.heal(0.1F);
-        miner.addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 3, 0));
+        miner.addStatusEffect(new StatusEffectInstance(StatusEffects.HASTE, 3 * secsToTicks, 0));
         return super.postMine(stack, world, state, pos, miner);
     }
 }

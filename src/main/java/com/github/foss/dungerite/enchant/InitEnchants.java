@@ -2,18 +2,20 @@ package com.github.foss.dungerite.enchant;
 
 import com.github.foss.dungerite.Dungerite;
 import com.github.foss.dungerite.enchant.enchants.BingQiLinEnchantment;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public interface InitEnchants {
 
-    EnchantsWithPath[] enchants = {
-            new BingQiLinEnchantment()
-    };
+    Enchantment[] enchants = {new BingQiLinEnchantment()};
+    String[] paths = {"bing_qi_lin_enchant"};
 
     default void registerEnchants() {
-        for (EnchantsWithPath enchantment : enchants) {
-            Registry.register(Registry.ENCHANTMENT, new Identifier(Dungerite.MOD_ID, enchantment.getPath()), enchantment);
+        int i = 0;
+        for (Enchantment enchantment : enchants) {
+            Registry.register(
+                    Registry.ENCHANTMENT, new Identifier(Dungerite.MOD_ID, paths[i]), enchantment);
         }
     }
 }
